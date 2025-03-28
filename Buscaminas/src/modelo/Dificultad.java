@@ -1,19 +1,32 @@
 package modelo;
 
 public enum Dificultad {
-	FACIL (10),
-	NORMAL(20),
-	DIFICIL(30);
+	FACIL (8,8,10),
+	NORMAL(16,16,40),
+	DIFICIL(16,30,99);
 	
-	private final int TAMANO;
+	private final int FILAS;
+	private final int COLUMNAS;
+	private final int MINAS;
 	
-	Dificultad (int TAMANO) {
-		this.TAMANO = TAMANO;
+	
+	Dificultad (int FILAS, int COLUMNAS, int MINAS) {
+		this.FILAS = FILAS;
+		this.COLUMNAS=COLUMNAS;
+		this.MINAS=MINAS;
 	}
 	
-	public int getTamaño() {
-		return TAMANO;
-	}
+	public int getFilas() {
+        return FILAS;
+    }
+
+    public int getColumnas() {
+        return COLUMNAS;
+    }
+
+    public int getMinas() {
+        return MINAS;
+    }
 }
 
 

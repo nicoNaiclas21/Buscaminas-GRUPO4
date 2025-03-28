@@ -1,5 +1,6 @@
 package controlador;
 
+import modelo.Dificultad;
 import vista.VentanaJuego;
 import vista.VentanaMenu;
 
@@ -15,9 +16,9 @@ public class Main {
 		ventanaMenu.setVisible(true);
 	}
 
-	public static void abrirJuegoYCerrarMenu() {
+	public static void abrirJuegoYCerrarMenu(Dificultad dificultad) {
 		ventanaMenu.setVisible(false);
-		ventanaJuego = new VentanaJuego();
+		ventanaJuego = new VentanaJuego(dificultad);
 		ventanaJuego.setVisible(true);
 	}
 }

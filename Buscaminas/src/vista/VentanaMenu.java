@@ -195,9 +195,9 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(dificultad==null) {
-					JOptionPane.showMessageDialog(null, "Seleccionada una dificultad");
+					dificultad = Dificultad.FACIL;
 				}else {
-					Main.abrirJuegoYCerrarMenu();
+					Main.abrirJuegoYCerrarMenu(dificultad);
 				}
 			}
 		});
