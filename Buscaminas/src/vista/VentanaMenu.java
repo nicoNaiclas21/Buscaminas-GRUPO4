@@ -6,8 +6,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.Main;
+import modelo.Dificultad;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
@@ -24,8 +30,10 @@ public class VentanaMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-
+	private JLabel labelDificultad; 
+	private Dificultad dificultad;
 	public VentanaMenu() {
+		dificultad = null;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 414, 303);
 		contentPane = new JPanel();
@@ -99,7 +107,7 @@ public class VentanaMenu extends JFrame {
 		gbc_lblNewLabel.gridy = 0;
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
-		JLabel labelDificultad = new JLabel("");
+		labelDificultad = new JLabel("");
 		GridBagConstraints gbc_labelDificultad = new GridBagConstraints();
 		gbc_labelDificultad.anchor = GridBagConstraints.WEST;
 		gbc_labelDificultad.gridx = 1;
@@ -134,6 +142,7 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Facil");
+				dificultad = Dificultad.FACIL;
 			}
 		});
 		botonFacil.addActionListener(new ActionListener() {
@@ -153,6 +162,7 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Normal");
+				dificultad = Dificultad.NORMAL;
 			}
 		});
 		GridBagConstraints gbc_botonNormal = new GridBagConstraints();
@@ -168,6 +178,7 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Dificil");
+				dificultad = Dificultad.DIFICIL;
 			}
 		});
 		botonDificil.addActionListener(new ActionListener() {
@@ -180,6 +191,16 @@ public class VentanaMenu extends JFrame {
 		panel_1.add(botonDificil, gbc_botonDificil);
 		
 		JButton botonJugar = new JButton("JUGAR");
+		botonJugar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(dificultad==null) {
+					JOptionPane.showMessageDialog(null, "Seleccionada una dificultad");
+				}else {
+					Main.abrirJuegoYCerrarMenu();
+				}
+			}
+		});
 		botonJugar.setFont(new Font("Segoe UI Black", Font.BOLD, 11));
 		GridBagConstraints gbc_botonJugar = new GridBagConstraints();
 		gbc_botonJugar.insets = new Insets(0, 0, 0, 5);
