@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.Main;
 import modelo.Dificultad;
+import modelo.Usuario;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -77,6 +78,7 @@ public class VentanaMenu extends JFrame {
 		gbc_lblNewLabel_3.gridy = 0;
 		panel_2.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
+		
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
@@ -84,6 +86,7 @@ public class VentanaMenu extends JFrame {
 		gbc_textField.gridy = 0;
 		panel_2.add(textField, gbc_textField);
 		textField.setColumns(10);
+		
 		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
