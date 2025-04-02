@@ -56,7 +56,9 @@ public class Tablero {
 
         for (int i : direcciones) {
             for (int j : direcciones) {
-                if (i == 0 && j == 0) continue;
+                if (i == 0 && j == 0) {
+                	continue;
+                }
 
                 int vecinoX = (indice / columnas) + i;
                 int vecinoY = (indice % columnas) + j;

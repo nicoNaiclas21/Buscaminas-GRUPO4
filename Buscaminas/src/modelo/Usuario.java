@@ -31,7 +31,7 @@ public void setPuntos(int puntos) {
 	public void agregarUsuario() {
 		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
 		
-		Usuario user = new Usuario();
+		//Usuario user = new Usuario();
 		
 	}
 }
