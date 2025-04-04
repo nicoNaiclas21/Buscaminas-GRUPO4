@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.Main;
 import modelo.Dificultad;
+import modelo.SoundPlayer;
 import modelo.Usuario;
 
 import java.awt.GridBagLayout;
@@ -145,6 +146,7 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Facil");
+				SoundPlayer.playOnce("src/images/button-124476.wav", -5f);
 				dificultad = Dificultad.FACIL;
 			}
 		});
@@ -165,6 +167,7 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Normal");
+				SoundPlayer.playOnce("src/images/button-124476.wav", -5f);
 				dificultad = Dificultad.NORMAL;
 			}
 		});
@@ -181,6 +184,7 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Dificil");
+				SoundPlayer.playOnce("src/images/button-124476.wav", -5f);
 				dificultad = Dificultad.DIFICIL;
 			}
 		});

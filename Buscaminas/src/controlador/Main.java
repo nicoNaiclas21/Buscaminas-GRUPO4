@@ -1,6 +1,7 @@
 package controlador;
 
 import modelo.Dificultad;
+import modelo.SoundPlayer;
 import vista.VentanaJuego;
 import vista.VentanaMenu;
 
@@ -14,6 +15,8 @@ public class Main {
 
 		ventanaMenu = new VentanaMenu();
 		ventanaMenu.setVisible(true);
+		SoundPlayer soundPlayer = new SoundPlayer();
+		soundPlayer.playLoop("src/images/main-theme-68815.wav", -6f);
 	}
 
 	public static void abrirJuegoYCerrarMenu(Dificultad dificultad) {

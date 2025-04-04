@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -38,6 +40,7 @@ public class VentanaJuego extends JFrame {
     private JPanel panelTimer;
     private int banderasDisponibles;
     private JLabel labelBanderasUno, labelBanderasDos, labelBanderasTres;
+    private JButton botonCarita;
 
 	public VentanaJuego(Dificultad dificultad) {
 		setTitle("Buscaminas - " + dificultad);
@@ -70,6 +73,32 @@ public class VentanaJuego extends JFrame {
         panelTiempo.add(labelTiempoTres);
         
         panelTimer.add(panelTiempo, BorderLayout.EAST);
+        
+        ImageIcon iconCarita = new ImageIcon("src/images/caritaGuay.png");
+
+	    Image img = iconCarita.getImage();
+	    Image imgNuevo = img.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+	    ImageIcon iconoNuevo = new ImageIcon(imgNuevo);
+	
+	    botonCarita = new JButton(iconoNuevo);
+	
+	    botonCarita.setPreferredSize(new Dimension(50, 50));
+	
+	    botonCarita.setBorderPainted(false);
+	    botonCarita.setFocusPainted(false);
+	    botonCarita.setContentAreaFilled(false);
+        botonCarita.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reiniciarJuego();
+            }
+        });
+        JPanel panelCarita = new JPanel();
+        panelCarita.setLayout(new BorderLayout());
+        panelCarita.add(botonCarita, BorderLayout.CENTER);
+        
+        panelTimer.add(botonCarita, BorderLayout.CENTER);
+        
         contentPane.add(panelTimer, BorderLayout.NORTH);
         
         panelJuego = new JPanel();
@@ -116,82 +145,184 @@ public class VentanaJuego extends JFrame {
         timer.start();
 	}
 	
-	private void revelarCelda(JButton boton, int fila, int columna) {
-        Celda celda = tablero.obtenerCelda(fila, columna);
+	private void reiniciarJuego() {
+        segundos = 0;
+        labelTiempoUno.setIcon(new ImageIcon("src/images/time0.gif"));
+        labelTiempoDos.setIcon(new ImageIcon("src/images/time0.gif"));
+        labelTiempoTres.setIcon(new ImageIcon("src/images/time0.gif"));
 
-        if (celda.esMina()) {
-            boton.setIcon(new ImageIcon("src/images/bombdeath.gif"));
-            revelarTodoElTablero();
-            timer.stop();
-        } else {
-            int minasCercanas = celda.getMinasCerca();
-            if (minasCercanas == 0) {
-                boton.setIcon(new ImageIcon("src/images/open0.gif"));
-            } else if (minasCercanas == 1) {
-                boton.setIcon(new ImageIcon("src/images/open1.gif"));
-            } else if (minasCercanas == 2) {
-                boton.setIcon(new ImageIcon("src/images/open2.gif"));
-            } else if (minasCercanas == 3) {
-                boton.setIcon(new ImageIcon("src/images/open3.gif"));
-            } else if (minasCercanas == 4) {
-                boton.setIcon(new ImageIcon("src/images/open4.gif"));
-            } else if (minasCercanas == 5) {
-                boton.setIcon(new ImageIcon("src/images/open5.gif"));
-            } else if (minasCercanas == 6) {
-                boton.setIcon(new ImageIcon("src/images/open6.gif"));
-            } else if (minasCercanas == 7) {
-                boton.setIcon(new ImageIcon("src/images/open7.gif"));
-            } else if (minasCercanas == 8) {
-                boton.setIcon(new ImageIcon("src/images/open8.gif"));
-            }
+        this.tablero = new Tablero(dificultad);
+        this.celdas = tablero.getCeldas();
+        panelJuego.removeAll();
+        for (int i = 0; i < celdas.size(); i++) {
+            JButton boton = new JButton(new ImageIcon("src/images/blank.gif"));
+            boton.setPreferredSize(new Dimension(35, 35));
+
+            final int fila = i / dificultad.getColumnas();
+            final int columna = i % dificultad.getColumnas();
+
+            boton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    revelarCelda(boton, fila, columna);
+                }
+            });
+            boton.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                    if (SwingUtilities.isRightMouseButton(e)) {
+                        marcarBandera(boton, fila, columna);
+                    }
+                }
+            });
+
+            panelJuego.add(boton);
         }
-        boton.setDisabledIcon(boton.getIcon());
-        boton.setEnabled(false); 
+
+        panelJuego.revalidate();
+        panelJuego.repaint();
+        banderasDisponibles = dificultad.getMinas();
+        actualizarContadorBanderas();
+        juegoTerminado = false;
+        timer.start();
     }
+	
+	private boolean juegoTerminado = false;
+	
+	private void revelarCelda(JButton boton, int fila, int columna) {
+		
+		if (juegoTerminado) {
+			return;
+		}
+	    Celda celda = tablero.obtenerCelda(fila, columna);
+
+	    if (celda.estaDescubierta() || celda.esMarcada()) return;
+
+	    celda.decubrir();
+
+	    if (celda.esMina()) {
+	        boton.setIcon(new ImageIcon("src/images/bombdeath.gif"));
+	        boton.setDisabledIcon(boton.getIcon());
+	        boton.setEnabled(false);
+	        juegoTerminado=true;
+	        timer.stop();
+	        revelarTodoElTablero();
+	        JOptionPane.showMessageDialog(this, "¡Has Perdido! Has activado una mina.", "Game Over", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    int minasCercanas = celda.getMinasCerca();
+	    boton.setIcon(new ImageIcon("src/images/open" + minasCercanas + ".gif"));
+	    boton.setDisabledIcon(boton.getIcon());
+	    boton.setEnabled(false);
+
+	    if (minasCercanas == 0) {
+	        revelarCeldasVacias(fila, columna);
+	    }
+	}
+
 	
 	private void revelarTodoElTablero() {
 	    for (int i = 0; i < celdas.size(); i++) {
 	        Celda celda = celdas.get(i);
 	        JButton boton = (JButton) panelJuego.getComponent(i);
 	        
-	        if (celda.esMina()) {
-	            if (boton.getIcon().toString().contains("bombdeath.gif")) {
-	                continue;
-	            }
+	        if (celda.esMina() && celda.esMarcada()) {
+	            boton.setIcon(new ImageIcon("src/images/bombflagged.gif"));
+	            boton.setDisabledIcon(boton.getIcon());
+
+	        } else if (celda.esMina() && !celda.estaDescubierta()) {
 	            boton.setIcon(new ImageIcon("src/images/bombrevealed.gif"));
-	        } 
-	        else if (celda.esMarcada()) {
+	            boton.setDisabledIcon(boton.getIcon());
+
+	        } else if (!celda.esMina() && celda.esMarcada() && !celda.estaDescubierta()) {
 	            boton.setIcon(new ImageIcon("src/images/bombmisflagged.gif"));
-	        } 
-	        else if (celda.getMinasCerca() > 0) {
-	            String imagen = "src/images/open" + celda.getMinasCerca() + ".gif";
-	            boton.setIcon(new ImageIcon(imagen));
+	            boton.setDisabledIcon(boton.getIcon());
+	            
+	        }else if (celda.estaDescubierta()) {
+	            boton.setDisabledIcon(boton.getIcon());
 	        }
-	        else {
-	            boton.setIcon(new ImageIcon("src/images/open0.gif"));
-	        }
-	        boton.setDisabledIcon(boton.getIcon());
+
+
 	        boton.setEnabled(false);
 	    }
 	}
 	
+	private void comprobarVictoria() {
+	    boolean ganar = true;
+	    for (Celda celda : celdas) {
+	        if (!celda.esMina() && !celda.estaDescubierta()) {
+	            ganar = false;
+	            break;
+	        }
+	    }
+	    if (ganar) {
+	        juegoTerminado = true;
+	        timer.stop();
+	        JOptionPane.showMessageDialog(this, "¡Felicidades! Has ganado.", "You Win!", JOptionPane.INFORMATION_MESSAGE);
+	    }
+	}
+
+
+	
 	private void marcarBandera(JButton boton, int fila, int columna) {
+		if(juegoTerminado) {
+			return;
+		}
 	    Celda celda = tablero.obtenerCelda(fila, columna);
 	    
-	    if (!celda.estaDescubierta()) {
-	        if (celda.esMarcada()) {
-	            celda.desmarcar();
-	            boton.setIcon(new ImageIcon("src/images/blank.gif"));
-	            banderasDisponibles++;
-	        } else if (banderasDisponibles > 0) {
+	    if (celda.estaDescubierta()) {
+	    	return;
+	    }
+	    if (celda.esMarcada()) {
+	    	celda.desmarcar();
+	        boton.setIcon(new ImageIcon("src/images/blank.gif"));
+	        banderasDisponibles++;
+	    } else if (banderasDisponibles > 0) {
 	            celda.marcar();
 	            boton.setIcon(new ImageIcon("src/images/bombflagged.gif"));
 	            banderasDisponibles--;
-	        } else {
-	            return;
-	        }
-	        actualizarContadorBanderas();
-	    }
+	    } 
+	    actualizarContadorBanderas();
+	    
+	}
+	
+	private void revelarCeldasVacias(int fila,int columna) {
+		int filas = dificultad.getFilas();
+		int columnas = dificultad.getColumnas();
+		
+		for(int i = -1; i<=1;i++) {
+			for(int j=-1;j<=1;j++) {
+				int nuevaFila = fila+i;
+				int nuevaCol = columna+j;
+				
+				if(nuevaFila >=0 && nuevaFila <filas && nuevaCol >= 0 && nuevaCol < columnas) {
+					int ind = nuevaFila * columnas + nuevaCol;
+					Celda celdaDeAlLado = tablero.obtenerCelda(nuevaFila, nuevaCol);
+					JButton botonDeAlLado = (JButton) panelJuego.getComponent(ind);
+					
+					if (!celdaDeAlLado.estaDescubierta() && !celdaDeAlLado.esMina()) {
+					    if (celdaDeAlLado.esMarcada()) {
+					        celdaDeAlLado.desmarcar();
+					        banderasDisponibles++;
+					        actualizarContadorBanderas();
+					    }
+
+					    celdaDeAlLado.decubrir();
+					    int minasCercanas = celdaDeAlLado.getMinasCerca();
+
+					    botonDeAlLado.setEnabled(false);
+					    botonDeAlLado.setDisabledIcon(new ImageIcon("src/images/open" + minasCercanas + ".gif"));
+					    botonDeAlLado.setIcon(new ImageIcon("src/images/open" + minasCercanas + ".gif"));
+
+					    if (minasCercanas == 0) {
+					        revelarCeldasVacias(nuevaFila, nuevaCol);
+					    }
+					}
+
+				}
+			}
+		}
+		comprobarVictoria();
 	}
 	
 	private void inicializarContadorBanderas() {
@@ -201,7 +332,13 @@ public class VentanaJuego extends JFrame {
 	    labelBanderasDos = new JLabel(new ImageIcon("src/images/time" + ((banderasDisponibles % 100) / 10) + ".gif"));
 	    labelBanderasTres = new JLabel(new ImageIcon("src/images/time" + (banderasDisponibles % 10) + ".gif"));
 	    
-	    panelBanderas.add(new JLabel("Banderas:"));
+	    ImageIcon originalIcon = new ImageIcon("src/images/bandera.png");
+	    Image img = originalIcon.getImage();
+	    Image imgNuevo = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+	    ImageIcon iconNuevo = new ImageIcon(imgNuevo);
+
+	    panelBanderas.add(new JLabel(iconNuevo));
+
 	    panelBanderas.add(labelBanderasUno);
 	    panelBanderas.add(labelBanderasDos);
 	    panelBanderas.add(labelBanderasTres);
