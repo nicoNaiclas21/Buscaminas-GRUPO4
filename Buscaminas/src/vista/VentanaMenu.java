@@ -6,8 +6,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.Main;
+import modelo.Dificultad;
+import modelo.SoundPlayer;
+import modelo.Usuario;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
@@ -17,32 +25,17 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
+import javax.swing.JTextField;
 
 public class VentanaMenu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaMenu frame = new VentanaMenu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	private JTextField textField;
+	private JLabel labelDificultad; 
+	private Dificultad dificultad;
 	public VentanaMenu() {
+		dificultad = null;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 414, 303);
 		contentPane = new JPanel();
@@ -51,9 +44,9 @@ public class VentanaMenu extends JFrame {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{31, 28, 65, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{41, 31, 28, 65, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel lblNewLabel_2 = new JLabel("BUSCAMINAS");
@@ -64,12 +57,44 @@ public class VentanaMenu extends JFrame {
 		gbc_lblNewLabel_2.gridy = 0;
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
+		JPanel panel_2 = new JPanel();
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.gridx = 1;
+		gbc_panel_2.gridy = 1;
+		contentPane.add(panel_2, gbc_panel_2);
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+		gbl_panel_2.columnWidths = new int[]{0, 0, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0};
+		gbl_panel_2.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		panel_2.setLayout(gbl_panel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Introduce tu nombre:");
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_3.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNewLabel_3.gridx = 0;
+		gbc_lblNewLabel_3.gridy = 0;
+		panel_2.add(lblNewLabel_3, gbc_lblNewLabel_3);
+		
+		
+		textField = new JTextField();
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.gridx = 1;
+		gbc_textField.gridy = 0;
+		panel_2.add(textField, gbc_textField);
+		textField.setColumns(10);
+		
+		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 1;
+		gbc_panel.gridy = 2;
 		contentPane.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 0};
@@ -86,7 +111,7 @@ public class VentanaMenu extends JFrame {
 		gbc_lblNewLabel.gridy = 0;
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
-		JLabel labelDificultad = new JLabel("");
+		labelDificultad = new JLabel("");
 		GridBagConstraints gbc_labelDificultad = new GridBagConstraints();
 		gbc_labelDificultad.anchor = GridBagConstraints.WEST;
 		gbc_labelDificultad.gridx = 1;
@@ -98,7 +123,7 @@ public class VentanaMenu extends JFrame {
 		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 1;
-		gbc_panel_1.gridy = 2;
+		gbc_panel_1.gridy = 3;
 		contentPane.add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0};
@@ -121,6 +146,8 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Facil");
+				SoundPlayer.playOnce("src/images/button-124476.wav", -5f);
+				dificultad = Dificultad.FACIL;
 			}
 		});
 		botonFacil.addActionListener(new ActionListener() {
@@ -140,6 +167,8 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Normal");
+				SoundPlayer.playOnce("src/images/button-124476.wav", -5f);
+				dificultad = Dificultad.NORMAL;
 			}
 		});
 		GridBagConstraints gbc_botonNormal = new GridBagConstraints();
@@ -155,6 +184,8 @@ public class VentanaMenu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				labelDificultad.setText("Dificil");
+				SoundPlayer.playOnce("src/images/button-124476.wav", -5f);
+				dificultad = Dificultad.DIFICIL;
 			}
 		});
 		botonDificil.addActionListener(new ActionListener() {
@@ -167,11 +198,21 @@ public class VentanaMenu extends JFrame {
 		panel_1.add(botonDificil, gbc_botonDificil);
 		
 		JButton botonJugar = new JButton("JUGAR");
+		botonJugar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(dificultad==null) {
+					dificultad = Dificultad.FACIL;
+				}else {
+					Main.abrirJuegoYCerrarMenu(dificultad);
+				}
+			}
+		});
 		botonJugar.setFont(new Font("Segoe UI Black", Font.BOLD, 11));
 		GridBagConstraints gbc_botonJugar = new GridBagConstraints();
 		gbc_botonJugar.insets = new Insets(0, 0, 0, 5);
 		gbc_botonJugar.gridx = 1;
-		gbc_botonJugar.gridy = 3;
+		gbc_botonJugar.gridy = 4;
 		contentPane.add(botonJugar, gbc_botonJugar);
 	}
 
