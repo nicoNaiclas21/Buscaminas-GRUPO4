@@ -204,6 +204,7 @@ public class VentanaMenu extends JFrame {
 				if(dificultad==null) {
 					dificultad = Dificultad.FACIL;
 				}else {
+                    SoundPlayer.playOnce("src/images/jugar.wav", -5f);
 					Main.abrirJuegoYCerrarMenu(dificultad);
 				}
 			}

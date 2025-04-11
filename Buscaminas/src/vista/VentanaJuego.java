@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 
 import modelo.Celda;
 import modelo.Dificultad;
+import modelo.SoundPlayer;
 import modelo.Tablero;
 
 public class VentanaJuego extends JFrame {
@@ -117,12 +118,16 @@ public class VentanaJuego extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     revelarCelda(boton, fila, columna);
+                    SoundPlayer.playOnce("src/images/kick.wav", -5f);
+
                 }
             });
             boton.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent e) {
                     if (SwingUtilities.isRightMouseButton(e)) {
                         marcarBandera(boton, fila, columna);
+                        SoundPlayer.playOnce("src/images/kick.wav", -5f);
+
                     }
                 }
             });
@@ -203,6 +208,8 @@ public class VentanaJuego extends JFrame {
 	        boton.setIcon(new ImageIcon("src/images/bombdeath.gif"));
 	        boton.setDisabledIcon(boton.getIcon());
 	        boton.setEnabled(false);
+            SoundPlayer.playOnce("src/images/explosion.wav", -5f);
+
 	        juegoTerminado=true;
 	        timer.stop();
 	        revelarTodoElTablero();
@@ -281,7 +288,7 @@ public class VentanaJuego extends JFrame {
 	            celda.marcar();
 	            boton.setIcon(new ImageIcon("src/images/bombflagged.gif"));
 	            banderasDisponibles--;
-	    } 
+	    }
 	    actualizarContadorBanderas();
 	    
 	}
