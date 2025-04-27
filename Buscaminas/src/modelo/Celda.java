@@ -6,12 +6,14 @@ public class Celda {
 	private boolean descubierta;
 	private boolean marcada;
 	private int minasCerca;
+	private boolean descubiertaCorrectamente;
 	
 	public Celda() {
 		this.esMina= false;
 		this.descubierta= false;
 		this.marcada=false;
 		this.minasCerca=0;
+		this.descubiertaCorrectamente=false;
 	}
 	
 	public boolean esMina() {
@@ -28,6 +30,9 @@ public class Celda {
 	
 	public void decubrir() {
 		this.descubierta=true;
+		if(!esMina) {
+			this.descubiertaCorrectamente=true;
+		}
 	}
 	
 	public boolean esMarcada() {
@@ -48,4 +53,12 @@ public class Celda {
 	public void desmarcar() {
 		this.marcada=false;
 	}
+	
+	public boolean esDescubiertaCorrectamente() {
+        return descubiertaCorrectamente;
+    }
+
+    public void resetDescubiertaCorrectamente() {
+        this.descubiertaCorrectamente = false;
+    }
 }

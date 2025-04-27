@@ -3,35 +3,33 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Usuario {
-private String nombre;
-private int puntos;
+public class Usuario implements Comparable<Usuario> {
+	private String nombre;
+	private int puntos;
 
 	public Usuario(String nombre, int puntos) {
-	this.nombre = nombre;
-	this.puntos = puntos;
-}
+		this.nombre = nombre;
+		this.puntos = puntos;
+	}
 
 	public String getNombre() {
-	return nombre;
-}
-
-public void setNombre(String nombre) {
-	this.nombre = nombre;
-}
-
-public int getPuntos() {
-	return puntos;
-}
-
-public void setPuntos(int puntos) {
-	this.puntos = puntos;
-}
-
-	public void agregarUsuario() {
-		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
-		
-		//Usuario user = new Usuario();
-		
+		return nombre;
 	}
+
+	public int getPuntos() {
+		return puntos;
+	}
+
+	public void setPuntos(int puntos) {
+		this.puntos = puntos;
+	}
+
+	@Override
+	public int compareTo(Usuario o) {
+		// TODO Auto-generated method stub
+		return Integer.compare(o.puntos, this.puntos);
+	}
+
+	
+	
 }

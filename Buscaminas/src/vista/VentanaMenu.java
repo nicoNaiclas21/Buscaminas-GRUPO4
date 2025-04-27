@@ -201,11 +201,12 @@ public class VentanaMenu extends JFrame {
 		botonJugar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				String nombre = textField.getText();
 				if(dificultad==null) {
 					dificultad = Dificultad.FACIL;
 				}else {
                     SoundPlayer.playOnce("src/images/jugar.wav", -5f);
-					Main.abrirJuegoYCerrarMenu(dificultad);
+					Main.abrirJuegoYCerrarMenu(nombre,dificultad);
 				}
 			}
 		});
