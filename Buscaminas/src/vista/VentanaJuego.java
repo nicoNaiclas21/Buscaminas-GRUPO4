@@ -50,10 +50,11 @@ public class VentanaJuego extends JFrame {
 	public VentanaJuego(String nombre,Dificultad dificultad) {
 		setTitle("Buscaminas - " + dificultad);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(35*dificultad.getColumnas(), 35*dificultad.getFilas());
+        setSize(35*dificultad.getColumnas(), 35*dificultad.getFilas()+50);
         setLocationRelativeTo(null);
-        this.banderasDisponibles = dificultad.getMinas();
+        setResizable(false);
         
+        this.banderasDisponibles = dificultad.getMinas();
         this.dificultad = dificultad;
         this.tablero = new Tablero(dificultad);
         this.celdas = tablero.getCeldas();
@@ -62,6 +63,7 @@ public class VentanaJuego extends JFrame {
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         setContentPane(contentPane);
+        
         
         panelTimer = new JPanel();
         panelTimer.setLayout(new BorderLayout());
@@ -222,11 +224,7 @@ public class VentanaJuego extends JFrame {
 	        timer.stop();
 	        revelarTodoElTablero();
 	        JOptionPane.showMessageDialog(this, "¡Has Perdido! Has activado una mina.", "Game Over", JOptionPane.ERROR_MESSAGE);
-	        
-	        minasActivadas++;
-	        
-	        Main.getRanking().agregarOActualizarUsuario(new Usuario(nombre,calcularPuntos()));
-	        Main.abrirRanking();
+	        Main.abrirMenu();
 	        return;
 	    }
 
@@ -245,6 +243,8 @@ public class VentanaJuego extends JFrame {
 	        celda.esDescubiertaCorrectamente();
 	        celdasCorrectamenteDestapadas++; 
 	    }
+	    
+	    comprobarVictoria();
 	}
 
 	
@@ -286,8 +286,7 @@ public class VentanaJuego extends JFrame {
 	        juegoTerminado = true;
 	        timer.stop();
 	        JOptionPane.showMessageDialog(this, "¡Felicidades! Has ganado.", "You Win!", JOptionPane.INFORMATION_MESSAGE);
-	        Ranking ranking = new Ranking();
-	        ranking.agregarOActualizarUsuario(new Usuario(nombre, calcularPuntos()));
+	        Main.getRanking().agregarOActualizarUsuario(new Usuario(nombre, tablero.calcularPuntos(segundos)));
 	        Main.abrirRanking();
 	    }
 	}
@@ -338,6 +337,7 @@ public class VentanaJuego extends JFrame {
 					    }
 
 					    celdaDeAlLado.decubrir();
+					    celdasCorrectamenteDestapadas++;
 					    int minasCercanas = celdaDeAlLado.getMinasCerca();
 
 					    botonDeAlLado.setEnabled(false);
@@ -362,12 +362,7 @@ public class VentanaJuego extends JFrame {
 	    labelBanderasDos = new JLabel(new ImageIcon("src/images/time" + ((banderasDisponibles % 100) / 10) + ".gif"));
 	    labelBanderasTres = new JLabel(new ImageIcon("src/images/time" + (banderasDisponibles % 10) + ".gif"));
 	    
-	    ImageIcon originalIcon = new ImageIcon("src/images/bandera.png");
-	    Image img = originalIcon.getImage();
-	    Image imgNuevo = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-	    ImageIcon iconNuevo = new ImageIcon(imgNuevo);
-
-	    panelBanderas.add(new JLabel(iconNuevo));
+	    
 
 	    panelBanderas.add(labelBanderasUno);
 	    panelBanderas.add(labelBanderasDos);
@@ -386,13 +381,6 @@ public class VentanaJuego extends JFrame {
 	    labelBanderasTres.setIcon(new ImageIcon("src/images/time" + unidades + ".gif"));
 	}
 
-	private int calcularPuntos() {
-		int c = celdasCorrectamenteDestapadas;
-		int m = minasActivadas;
-		int d= dificultad.getCOEFICIENTE();
-		int t= segundos;
-		
-		return ((c-m)*d)/t;
-	}
+	
 
 }

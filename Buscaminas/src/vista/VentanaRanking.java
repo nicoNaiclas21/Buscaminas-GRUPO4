@@ -32,6 +32,7 @@ public class VentanaRanking extends JFrame {
 		setBounds(100, 100, 539, 398);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setResizable(false);
 
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
@@ -92,7 +93,7 @@ public class VentanaRanking extends JFrame {
             panel.add(puntos[i], gbc_puntos);
         }
 
-        // Rellenar las etiquetas con los jugadores disponibles
+        
         for (int i = 0; i < usuarios.size() && i < 10; i++) {
             Usuario usuario = usuarios.get(i);
             nombres[i].setText(usuario.getNombre());

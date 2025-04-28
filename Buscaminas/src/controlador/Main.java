@@ -42,4 +42,9 @@ public class Main {
 	public static Ranking getRanking() {
 	    return ranking;
 	}
+	
+	public static void abrirMenu() {
+		ventanaJuego.setVisible(false);
+		ventanaMenu.setVisible(true);
+	}
 }

@@ -40,7 +40,8 @@ public class VentanaMenu extends JFrame {
 		setBounds(100, 100, 414, 303);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		setResizable(false);
+		
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0};
@@ -48,6 +49,7 @@ public class VentanaMenu extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
+		
 		
 		JLabel lblNewLabel_2 = new JLabel("BUSCAMINAS");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
