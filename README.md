@@ -1,4 +1,4 @@
-# 🎲 Proyecto Java - Buscaminas - Grupo4
+# 🔍💣 Proyecto Java - Buscaminas - Grupo4
 
 ---
 
