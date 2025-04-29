@@ -25,7 +25,7 @@ El proyecto está organizado en el paquete `src` con la siguiente estructura:
   
 - **modelo/**
   - `Celda.java`: Representa una celda del tablero.
-  - `Dificultad.java`: Define los niveles de dificultad.
+  - `Dificultad.java`: Define los niveles de dificultad y la cantidad de filas y columnas.
   - `Ranking.java`: Administra el sistema de puntuaciones.
   - `SoundPlayer.java`: Maneja efectos de sonido.
   - `Tablero.java`: Modela la lógica del tablero.
@@ -44,19 +44,17 @@ El proyecto está organizado en el paquete `src` con la siguiente estructura:
 
 ## 👥 Integrantes del Grupo
 
-- 👤 Integrante 1
-- 👤 Integrante 2
-- 👤 Integrante 3
-- 👤 Integrante 4
+- 👤 nicoNaiclas21
+- 👤 GaraziLabaka
+- 👤 alejandroonaindia
+- 👤 AritzP
 
-*(Agrega aquí los nombres de los integrantes del equipo)*
 
 ---
 
 ## 📝 Licencia
 
 Este proyecto está licenciado bajo la [Licencia MIT](https://opensource.org/licenses/MIT).  
-¡Puedes usarlo, modificarlo y distribuirlo libremente!
 
 
 
