@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -17,6 +18,7 @@ import java.awt.Font;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class VentanaRanking extends JFrame {
 
@@ -27,10 +29,14 @@ public class VentanaRanking extends JFrame {
 	private JLabel[] puntos;
 
 	public VentanaRanking(List<Usuario> usuarios) {
+		setTitle("Buscaminas-Grupo4");
+		setIconImage(new ImageIcon(getClass().getResource("/images/bombrevealed.gif")).getImage());
 		this.usuarios=usuarios;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 539, 398);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(118, 129, 254));
+		contentPane.setForeground(new Color(118, 129, 254));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setResizable(false);
 
@@ -43,7 +49,7 @@ public class VentanaRanking extends JFrame {
 		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Ranking");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setFont(new Font("Britannic Bold", Font.BOLD, 28));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
@@ -51,6 +57,8 @@ public class VentanaRanking extends JFrame {
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(118, 129, 254));
+		panel.setForeground(new Color(118, 129, 254));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -76,7 +84,7 @@ public class VentanaRanking extends JFrame {
             gbc_puesto.gridy = i;
             panel.add(puestoLabel, gbc_puesto);
 
-            // Nombre del jugador
+            
             nombres[i] = new JLabel("no hay jugador");
             GridBagConstraints gbc_nombre = new GridBagConstraints();
             gbc_nombre.insets = new Insets(0, 0, 5, 5);
@@ -84,7 +92,7 @@ public class VentanaRanking extends JFrame {
             gbc_nombre.gridy = i;
             panel.add(nombres[i], gbc_nombre);
 
-            // Puntos del jugador
+            
             puntos[i] = new JLabel("-");
             GridBagConstraints gbc_puntos = new GridBagConstraints();
             gbc_puntos.insets = new Insets(0, 0, 5, 0);
@@ -101,7 +109,7 @@ public class VentanaRanking extends JFrame {
             	puntos[i].setText("-");
             }
             else {
-            	puntos[i].setText(Integer.toString(usuario.getPuntos()));
+            	puntos[i].setText(String.format("%.2f",usuario.getPuntos()));
             }
         }
 	}

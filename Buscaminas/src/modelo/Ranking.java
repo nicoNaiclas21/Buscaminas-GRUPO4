@@ -29,7 +29,7 @@ public class Ranking {
 				String[] partes = linea.split("\t");
 				if(partes.length==2) {
 					String nombre = partes[0];
-					int puntos = Integer.parseInt(partes[1]);
+					double puntos = Double.parseDouble(partes[1]);
 					usuarios.add(new Usuario(nombre,puntos));	
 				}
 			}

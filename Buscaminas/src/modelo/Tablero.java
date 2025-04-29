@@ -79,7 +79,7 @@ public class Tablero {
         return celdas.get(indice);
     }
 	
-	public int calcularPuntos(int segundos) {
+	public double calcularPuntos(int segundos) {
 		int totalCeldas = dificultad.getFilas() * dificultad.getColumnas();
 		int totalMinas = dificultad.getMinas();
 		int coeficiente = dificultad.getCOEFICIENTE();
@@ -88,7 +88,7 @@ public class Tablero {
 		if(segundos==0) {
 			return celdasSinMinas + coeficiente;
 		}
-		return (celdasSinMinas*coeficiente)/segundos;
+		return (double)((celdasSinMinas*coeficiente))/segundos;
 	}
 
     public List<Celda> getCeldas() {

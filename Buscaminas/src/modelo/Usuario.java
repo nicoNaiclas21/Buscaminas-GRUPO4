@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Usuario implements Comparable<Usuario> {
 	private String nombre;
-	private int puntos;
+	private double puntos;
 
-	public Usuario(String nombre, int puntos) {
+	public Usuario(String nombre, double puntos) {
 		this.nombre = nombre;
 		this.puntos = puntos;
 	}
@@ -16,18 +16,18 @@ public class Usuario implements Comparable<Usuario> {
 		return nombre;
 	}
 
-	public int getPuntos() {
+	public double getPuntos() {
 		return puntos;
 	}
 
-	public void setPuntos(int puntos) {
+	public void setPuntos(double puntos) {
 		this.puntos = puntos;
 	}
 
 	@Override
 	public int compareTo(Usuario o) {
 		// TODO Auto-generated method stub
-		return Integer.compare(o.puntos, this.puntos);
+		return Double.compare(o.puntos, this.puntos);
 	}
 
 	

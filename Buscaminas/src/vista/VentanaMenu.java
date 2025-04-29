@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -35,10 +37,14 @@ public class VentanaMenu extends JFrame {
 	private JLabel labelDificultad; 
 	private Dificultad dificultad;
 	public VentanaMenu() {
+		setTitle("Buscaminas-Grupo4");
+		setIconImage(new ImageIcon(getClass().getResource("/images/bombrevealed.gif")).getImage());
 		dificultad = null;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 414, 303);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(118, 129, 254));
+		contentPane.setForeground(new Color(118, 129, 254));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setResizable(false);
 		
@@ -60,6 +66,8 @@ public class VentanaMenu extends JFrame {
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(118, 129, 254));
+		panel_2.setForeground(new Color(118, 129, 254));
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
 		gbc_panel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_2.fill = GridBagConstraints.BOTH;
@@ -92,6 +100,8 @@ public class VentanaMenu extends JFrame {
 		
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(118, 129, 254));
+		panel.setForeground(new Color(118, 129, 254));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -121,6 +131,8 @@ public class VentanaMenu extends JFrame {
 		panel.add(labelDificultad, gbc_labelDificultad);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(118, 129, 254));
+		panel_1.setForeground(new Color(118, 129, 254));
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_1.fill = GridBagConstraints.BOTH;

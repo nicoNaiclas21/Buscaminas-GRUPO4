@@ -49,6 +49,7 @@ public class VentanaJuego extends JFrame {
 
 	public VentanaJuego(String nombre,Dificultad dificultad) {
 		setTitle("Buscaminas - " + dificultad);
+		setIconImage(new ImageIcon(getClass().getResource("/images/bombrevealed.gif")).getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(35*dificultad.getColumnas(), 35*dificultad.getFilas()+50);
         setLocationRelativeTo(null);
